@@ -55,7 +55,7 @@ struct FileCache(Arc<Mutex<HashMap<ModuleSpecifier, File>>>);
 impl FileCache {
   pub fn get(&self, specifier: &ModuleSpecifier) -> Option<File> {
     let cache = self.0.lock().unwrap();
-    cache.get(specifier).as_deref()
+    cache.get(specifier).cloned()
   }
 
   pub fn insert(&self, specifier: ModuleSpecifier, file: File) -> Option<File> {
